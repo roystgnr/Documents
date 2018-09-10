@@ -11,6 +11,7 @@
 
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\commentout{
 \frame
 {
   \frametitle{Background}
@@ -51,6 +52,7 @@
   \item Teaming is a prerequisite for success.
   \end{itemize}
 }
+} % commentout
 
 
  
@@ -115,17 +117,25 @@
 {
   \frametitle{The \libmesh{} Software Library}
 
-  \begin{block}{Key Point}
+\begin{columns}
+\column{.5\textwidth}
+  \begin{block}{\libMesh{} Goals}
     \begin{itemize}
-      \item The \libmesh{} library is designed to be used by students, researchers, scientists, and engineers as a tool for \emphcolor{developing simulation codes} or as a tool for \emphcolor{rapidly implementing a numerical method}.
+      \item Use by students, researchers, scientists, and engineers as a tool for \emphcolor{developing simulation codes} or as a tool for \emphcolor{rapidly implementing a numerical method}.
       \item \libMesh{} is not an application code.
       \item It does not ``solve problem XYZ.''
         \begin{itemize}
-          \item It can be used to help you develop an application to solve problem XYZ, and to do so quickly with advanced numerical algorithms on high-performance computing platforms.
+          \item It helps users develop applications to solve XYZ,
+              quickly, with advanced algorithms on HPC platforms.
         \end{itemize}
       %\item It was initially targeted for finite element based simulations, but has been used for finite volume discretizations as well.
     \end{itemize}    
   \end{block}
+\column{.45\textwidth}
+  \begin{center}
+    \includegraphics[width=.9\textwidth]{mytreeandroots_allnames}
+  \end{center}
+\end{columns}
 } 
 
 
@@ -138,9 +148,9 @@
 \begin{itemize}
 \item LGPL2 for core
 \end{itemize}
-\item 35 Ph.D.\ theses, 393 papers (58 in 2015)
+\item 70 Ph.D.\ theses, 721 papers (134 in 2017)
 \item $\sim10$ current developers
-\item $160-240$ current users?
+\item $110-240$ current users?
 \end{itemize}
 \end{block}
 
@@ -152,7 +162,7 @@
 
 \begin{columns}
 \column{.35\textwidth}
-\includegraphics[width=\textwidth]{libmesh_mailinglists_membership}
+\includegraphics[width=\textwidth]{libmesh_citations}
 
 \column{.65\textwidth}
 \begin{block}{Challenges}
@@ -170,151 +180,5 @@
 \end{frame}
 
 
-\begin{frame}[t]
-  \begin{columns}
-    \column{.6\textwidth}
-    \begin{center}
-      \includegraphics[width=.9\textwidth]{mytreeandroots_allnames}
-    \end{center}
-    \column{.35\textwidth}
-    \begin{itemize}
-      \item Foundational (typically optional) library access via LibMesh's ``roots''.
-      \item Application ``branches'' built off the library ``trunk''.
-      \item Additional middleware layers (e.g. Akselos, GRINS, MOOSE) for more complex applications
-    \end{itemize}
-  \end{columns}
-
-\end{frame}
 
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame
-{
-  \frametitle{Software Reusability}
-  \begin{itemize}
-    \item At the inception of \libMesh{} in 2002, there were many high-quality software libraries that implemented some aspect of the end-to-end PDE simulation process:
-      \begin{itemize}
-        \item Parallel linear algebra
-        \item Partitioning algorithms for domain decomposition
-        \item Visualization formats
-        \item \ldots
-      \end{itemize}
-    \item A design goal of \libMesh{} has always been to provide flexible \& extensible interfaces to existing software whenever possible.
-    \item We implement the ``glue'' to these pieces, as well as what we viewed as the missing infrastructure:
-      \begin{itemize}
-        \item \emphcolor{Flexible data structures for the discretization of spatial domains and systems of PDEs posed on these domains.}
-      \end{itemize}          
-  \end{itemize}  
-}
-
-
-\section{Library Design}
-
-
-\begin{frame}
-\frametitle{Geometric Element Classes}
-
-\begin{columns}
-\column{.55\textwidth}
-\begin{center}
-\vspace{-5mm}
-\includegraphics[width=.75\textwidth]{DofObjects}
-\end{center}
-\column{.45\textwidth}
-\begin{itemize}
-\item Abstract interface gives mesh topology
-\item Concrete instantiations of mesh geometry
-\item Hides element type from most applications
-\item Runtime polymorphism allows mixed element types, dimensions
-\item Base class data arrays allow more optimization, inlining
-\end{itemize}
-
-\end{columns}
-
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame
-{
-  \frametitle{Linear Algebra}
-  \begin{center}
-    \includegraphics[width=\textwidth,trim=7.56in 0 0 0,clip]{libmesh_docs/classlibMesh_1_1SparseMatrix__inherit__graph}
-  \end{center}
-}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame
-{
-  \frametitle{I/O formats}
-  \begin{center}
-    \includegraphics[height=0.9\textheight]{libmesh_docs/mesh_io}
-  \end{center}
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame
-{
-  \frametitle{Domain Partitioning}
-  \begin{center}
-    \includegraphics[width=.3\textwidth]{part_trans}
-    %\\
-    \includegraphics[width=.3\textwidth]{streamtraces}
-  \end{center}  
-
-  \includegraphics[width=.65\textwidth]{libmesh_docs/partitioner}
-}
-
-
-\begin{frame}
-\frametitle{Mesh Data Structures}
-\begin{columns}
-\column{.6\textwidth}
-\begin{center}
-\includegraphics[width=.95\textwidth]{MeshUML}
-\end{center}
-\column{.4\textwidth}
-%\begin{block}{}
-\begin{itemize}
-\item \texttt{MeshBase} gives node or element iterators, all or active, global or local
-\item \texttt{SerialMesh} or \texttt{ParallelMesh} manages synchronized or distributed data
-\end{itemize}
-
-\includegraphics[width=.75\textwidth]{ParallelMesh3}
-%\end{block}
-\end{columns}
-
-\end{frame}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame
-{
-  \frametitle{Discretization: Finite Elements}
-  \begin{center}
-    \includegraphics[width=0.9\textwidth,trim=7.4in 0 0 0,clip]{libmesh_docs/classlibMesh_1_1FEAbstract__inherit__graph}
-  \end{center}
-}      
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame
-{
-  \frametitle{Algorithms: Error Estimation}
-  \begin{center}
-    \includegraphics[width=\textwidth]{libmesh_docs/error_estimation}
-  \end{center}
-}
-
-
-
-
-
-% LocalWords:  nasablue
