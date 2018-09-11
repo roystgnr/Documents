@@ -1,32 +1,40 @@
-\section{Weighted Residuals}
+\section{Physics Specification}
 %\input{outline_currentsection}
 
 \begin{frame}[<+->]
       %\frametitle{Weighted Residual Statement}
   \begin{itemize}
-  \item {The point of departure in any FE analysis which uses \libMesh{} is
-    the weighted residual statement
-    %(sometimes referred to as simply ``the residual'' in
-    %the documentation.)
+  \item {Typical FE analysis incorporates physics via
+    the weighted residual,
     \begin{equation}
       \nonumber
-      (F( u ), v) = 0 \hspace{.5in} \forall v \in \mathcal{V}
+        (F( u ), v) = 0 \hspace{.5in} \forall v \in \mathcal{V(\Omega)}
     \end{equation}
     }
-
-  \item{ Or, more precisely, the weighted residual statement associated with the
-    finite-dimensional space $\mathcal{V}^h \subset \mathcal{V}$
-    \begin{equation}
-      \nonumber
-      (F( u^{\alert{h}} ), v^{\alert{h}}) = 0 \hspace{.5in} \forall v^{\alert{h}} \in \mathcal{V}^{\alert{h}}
-  \end{equation}}
-
-  \item{ Even stabilized formulations boil down to some semilinear
-          form
+  \item{ Then discretizes it using a
+    finite-dimensional space $\mathcal{V}^h \subset \mathcal{V}$ and a
+          (integrated, stabilized?) semilinear form $\Res$:
     \begin{equation}
       \nonumber
       \Res( u^{\alert{h}}, v^{\alert{h}}) = 0 \hspace{.5in} \forall v^{\alert{h}} \in \mathcal{V}^{\alert{h}}
   \end{equation}}
+  \item But the complications than can be added are endless:
+      \begin{itemize} 
+      \item Transient physics (MOL?)
+          \begin{itemize}
+              \item Material history
+              \item Domain movement, ALE, deletion 
+          \end{itemize}
+      \item Vector-, tensor-valued variables
+      \item Multivariable problems
+          \begin{itemize}
+              \item Subdomain-specific variables ($\Omega_i \subsetneq \Omega$)
+              \item Mixed spaces ($\mathcal{V} \equiv \bigotimes_i \mathcal{V}_i$)
+              \item Scalar variables ($\mathcal{V} \equiv \bigotimes_i \mathcal{V}_i \otimes \Reals^n$)
+          \end{itemize}
+      \item Integro-differential equations
+      \item Multiple manifold dimensions
+      \end{itemize}
 
   \end{itemize}
 \end{frame}
@@ -34,26 +42,3 @@
 
 \input{wrs_examples}
 
-
-%\subsection*{Approximate Problem}
-\begin{frame}%[<+->]
-  %\frametitle{Weighted Residual Statement}
-  \begin{itemize}
-
-    %%   \item{In each of the examples, the weighted residual statement is obtained by
-    %%     multiplying the PDE by a test function $v$, integrating over the domain $\Omega$,
-    %%     and applying the divergence theorem.}
-
-    %%   \item{Since $v=0$ on $\partial \Omega_D$ (essential data) the boundary integrals
-    %%     are over $\partial \Omega_N$ only.}
-
-    %%   \item{There are simple and efficient techniques (e.g.\ penalty method) for
-    %%     enforcing the Dirichlet conditions.}
-
-  \item{To obtain the approximate problem, we simply
-    replace $u \leftarrow u^h$, $v \leftarrow v^h$, and $\Omega \leftarrow \Omega^h$
-    in the weighted residual
-    statement.}
-    
-  \end{itemize}
-\end{frame}
