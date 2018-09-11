@@ -1,0 +1,75 @@
+
+%===============================================================================
+% NEW SLIDE
+%===============================================================================
+\begin{frame}[fragile]
+\frametitle{Physics via C++14 Generic Programming}
+
+\begin{itemize}
+\item {\textbf{C++98:}} intrusive metaprogramming
+
+\begin{semiverbatim}\small
+template <typename T1, typename T2, typename T3>
+typename PlusType<typename MultipliesType<T1,T2>::type,
+                  typename ExpType<T3>::type>::type
+f(const T1& m, const T2& x, const T3& b)
+\{ return m*x+exp(b); \}
+\end{semiverbatim}
+
+\item {\textbf{C++14:}} user-friendly return type deduction
+
+\begin{semiverbatim}\small
+template <typename T1, typename T2, typename T3>
+auto f(const T1& m, const T2& x, const T3& b)
+\{ return m*x+exp(b); \}
+\end{semiverbatim}
+
+\item Expression template runtime construction, lazy evaluation
+
+\begin{semiverbatim}\small
+auto f = m*x+exp(b);
+\end{semiverbatim}
+
+\end{itemize}
+
+\end{frame}
+
+
+
+%===============================================================================
+% NEW SLIDE
+%===============================================================================
+\begin{frame}[fragile]
+\frametitle{Physics via C++14 Generic Programming}
+
+\begin{itemize}
+
+\item Expression-template-compatible compile-time kernels:
+
+\begin{semiverbatim}\small
+template <typename ContextType,
+          typename CacheType>
+auto weak_interior_residual
+  (const ContextType& context,
+   const CacheType&) const
+  \{
+    auto& du_dx  = std::get<1>(context.u);
+    auto& v_vals = std::get<0>(context.v);
+
+    return _b*du_dx*v_vals;
+  \}
+\end{semiverbatim}
+
+\item \software{Eigen::Array} calculations auto-vectorize
+
+\item \software{vex::vector} calculations run on GPU
+
+\item \software{MetaPhysicL::DualExpression} Jacobian calculations
+
+\item Automatic kernel fusion with expression templates
+
+\end{itemize}
+
+\end{frame}
+
+

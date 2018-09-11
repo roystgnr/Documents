@@ -14,36 +14,12 @@
   %\begin{center}   %Note: \centering is what makes the tables ``wiggle'' during slide transitions
   %% Three separate tabular elements.  The first column is an empty, fixed-width column designed
   %% to center the table without using centering commands.
-    \only<1>
-    {
     \begin{tabular}{p{.125\textwidth}ccc} \\
       &
       \includegraphics[width=.2\textwidth]{physical_element}&
-      \includegraphics[width=.2\textwidth]{map}&
+      \includegraphics[width=.15\textwidth]{map}&
       \includegraphics[width=.15\textwidth]{reference_element_red}
     \end{tabular}
-    }
-    %
-    \only<2>
-    {
-    \begin{tabular}{p{.125\textwidth}ccc} \\ 
-      &
-      \includegraphics[width=.2\textwidth]{physical_element}&
-      \includegraphics[width=.2\textwidth]{map_red}&
-      \includegraphics[width=.15\textwidth]{reference_element}
-    \end{tabular}
-    }
-    %
-    \only<3>
-    {
-    \begin{tabular}{p{.125\textwidth}ccc} \\ 
-      &
-      \includegraphics[width=.2\textwidth]{physical_element}&
-      \includegraphics[width=.2\textwidth]{map}&
-      \includegraphics[width=.15\textwidth]{reference_element}
-    \end{tabular}
-    }
-    
 %%     %% All in one table
 %%     \begin{tabular}{ccc} \\ 
 %%     %\fbox{
@@ -71,7 +47,7 @@
   %\end{center}
 
 
-  \only<2>
+  \only<2->
       {
 	\begin{block}{}
 	\begin{itemize}    
@@ -88,7 +64,7 @@
 	\end{equation}
       }
 
-\only<3>
+\only<3->
 {
   \begin{block}{}
   \begin{itemize}    

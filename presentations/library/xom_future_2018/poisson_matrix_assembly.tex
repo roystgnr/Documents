@@ -12,34 +12,28 @@
 \begin{semiverbatim}
 for (q=0; q<Nq; ++q) 
   for (i=0; i<Ns; ++i) \{
-    \alert<2>{Fe(i)   += \alert<3>{JxW[q]}*\alert<4>{f(xyz[q])}*\alert<5>{phi[i][q]};}
-    
+    Fe(i)   += JxW[q]*f(xyz[q])*phi[i][q];
     for (j=0; j<Ns; ++j)
-      \alert<6>{Ke(i,j) += \alert<7>{JxW[q]}*(\alert<8>{dphi[j][q]*dphi[i][q]});}
+      Ke(i,j) += JxW[q]*(dphi[j][q]*dphi[i][q]);
   \}
 \end{semiverbatim}
-\only<2-5>
-{
   \begin{equation}
     \nonumber
     \bv{F}^e_{i} = 
     \sum_{q=1}^{N_q}
-    \alert<4>{f(x(\xi_q))}
-    \alert<5>{\phi_i(\xi_q)}
-    \alert<3>{|J(\xi_q)| w_q}
+    f(x(\xi_q))
+    \phi_i(\xi_q)
+    |J(\xi_q)| w_q
   \end{equation}
-}
-\only<6->
-{
   \begin{equation}
   \nonumber
   \bv{K}^e_{ij} =
   \sum_{q=1}^{N_q}
-  \alert<8>{
     \hat{\nabla}_{\!\xi} \phi_j(\xi_q) \cdot
     \hat{\nabla}_{\!\xi} \phi_i(\xi_q)
-    }
-  \alert<7>{|J(\xi_q)| w_q}
+  |J(\xi_q)| w_q
   \end{equation}
-}
+\pause
+What is \emph{wrong} with this code?
 \end{frame}
+
