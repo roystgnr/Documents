@@ -1,37 +1,4 @@
 
-\subsubsection{Adaptivity Issues}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\royslide{Adaptivity and ParallelMesh}{
-\begin{columns}
-\begin{column}{.5\textwidth}
-\begin{center}
-\includegraphics[width=.9\textwidth]{parallelism/adaptive}
-\end{center}
-\end{column}
-\begin{column}{.5\textwidth}
-\royitemizebegin{Challenges}
-\item Reindexing elements, nodes, DoFs
-\item Synchronization of ghost objects
-\item Load balancing, Repartitioning
-\royitemizeend
-\end{column}
-\end{columns}
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\royslide{ParallelMesh Data Structure}{
-\royitemizebegin{std::vector fails}
-\item Not sparse
-\item $O(N_E)$ storage cost
-\royitemizeend
-\royitemizebegin{std::map}
-\item ``mapvector'' interface provides iterators
-\item $O(log (N_E/N_P))$ lookup time without std::unsorted\_map
-\item $O(1)$ lookup time with std::unsorted\_map
-\royitemizeend
-}
-
-
 
 \subsubsection{Parallel Programming}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

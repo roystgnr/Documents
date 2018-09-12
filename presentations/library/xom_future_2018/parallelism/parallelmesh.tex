@@ -1,7 +1,7 @@
-\subsection{ParallelMesh}
+\subsection{DistributedMesh Parallelism}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\royslide{SerialMesh Partitioning}{
+\royslide{ReplicatedMesh Partitioning}{
 \begin{columns}
 \begin{column}{.5\textwidth}
   \royitemizebegin{}
@@ -21,13 +21,22 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\royslide{ParallelMesh Partitioning}{
+\royslide{DistributedMesh Partitioning}{
 \begin{columns}
 \begin{column}{.5\textwidth}
   \royitemizebegin{}
-    \item Processors store only local and ghost objects
-    \item Each processor has a small Mesh subset
+    \item Each rank stores only local and ghost objects
     \item Mesh stays in sync through MPI communication
+    \item ``Ghosting functors'' let users specify arbitrary
+        requirements for each element $K$
+        \begin{itemize}
+            \item Geometric ghosting $G(K)$ keeps elements and nodes
+                available
+            \item Algebraic ghosting $A(K)$ keeps solution data on
+                elements available, $A(K) \subset G(K)$
+            \item Coupling $C(K)$ keeps degrees of freedom coupled,
+                $C(K) \subset A(K)$
+        \end{itemize}
   \royitemizeend
 \end{column}
 \begin{column}{.5\textwidth}
@@ -48,6 +57,12 @@
     \item Reduced memory use
     \item $O(N_E/N_P)$ CPU costs
   \royitemizeend
+
+  \royitemizebegin{Cons}
+    \item Increased code complexity
+    \item Increased synchronization ``bookkeeping''
+    \item Greater debugging difficulty
+  \royitemizeend
 \end{column}
 \begin{column}{.5\textwidth}
   \begin{center}
@@ -57,25 +72,6 @@
 \end{columns}
 }
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\royslide{ParallelMesh Partitioning}{
-\begin{columns}
-\begin{column}{.5\textwidth}
-  \royitemizebegin{Cons}
-    \item Increased code complexity
-    \item Increased synchronization ``bookkeeping''
-    \item Greater debugging difficulty
-  \royitemizeend
-\end{column}
-\begin{column}{.5\textwidth}
-  \begin{center}
-    \includegraphics[width=.9\textwidth]{parallelism/ParallelMesh3}
-  \end{center}
-\end{column}
-\end{columns}
-}
 
 
 %===============================================================================
@@ -91,9 +87,9 @@ Transient Cahn-Hilliard, Bogner-Fox-Schmidt quads or hexes
 
 \begin{block}{Results}
 \begin{itemize}
-\item Parallel codes using SerialMesh are unchanged for ParallelMesh
+\item Many codes using ReplicatedMesh are unchanged for DistributedMesh
 \item Overhead, distributed sparse matrix costs are unchanged
-\item Serialized mesh, indexing once dominated RAM use
+\item Replicated mesh, indexing used to dominate RAM use
 \end{itemize}
 \end{block}
 \end{frame}
@@ -109,30 +105,29 @@ Transient Cahn-Hilliard, Bogner-Fox-Schmidt quads or hexes
 \column{.6\textwidth}
 \begin{block}{Elem, Node creation}
 \begin{itemize}
-\item<2-> Ids $\{i: i\;{\mathrm{mod}}\;(N_P+1) = p\}$ are owned by processor $p$
+\item Ids $\{i: i\;{\mathrm{mod}}\;(N_P+1) = p\}$ are owned by processor $p$
 \end{itemize}
 \end{block}
 
-\visible<3->{
 \begin{block}{Synchronization}
 \begin{itemize}
 \item Refinement Flags
 \begin{itemize}
-  \item<4-> Data requested by id
-  \item<4-> Iteratively to enforce smoothing
+  \item Data requested by id
+  \item Iteratively to enforce smoothing
 \end{itemize}
 \item New ghost child elements, nodes
 \begin{itemize}
-\item<4-> Id requested by data
+\item Id requested by data
 \end{itemize}
 \item Hanging node constraint equations
 \begin{itemize}
-\item<4-> Iteratively through subconstraints,
+\item Iteratively through subconstraints,
 subconstraints-of-subconstraints...
 \end{itemize}
 \end{itemize}
 \end{block}
-}
+
 \column{.4\textwidth}
 \begin{center}
 \includegraphics[width=.6\textwidth]{parallelism/LevelOneProblem}

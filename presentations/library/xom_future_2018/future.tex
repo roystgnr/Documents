@@ -1,0 +1,26 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Future Priority Tasks}
+
+  \begin{itemize}
+    \item Optimizing newly-refactored \software{parallel\_sync.h} algorithms
+      \begin{itemize}
+        \item \software{send\_receive} ``Round-robin'' cost scaled like $\orderof{N_p}$
+        \item \software{alltoall} length sync + asynchonous I/O still $\orderof{\log{N_p}}$
+        \item \software{MPI-3} fully-asynchronous can be constant-time
+        \item GMG brings refinement into \emph{all} problems, not just AMR
+      \end{itemize}
+    \item Ease of Use versions of generic physics APIs
+      \begin{itemize}
+        \item Complicated expression template implementation for developers
+        \item Simple fully automatic stabilization, Jacobians, etc for users
+      \end{itemize}          
+    \item Library support for expandable ghosting functors
+      \begin{itemize}
+        \item Patch layer expansion via fill algorithm?
+        \item Geometric distance expansion via octree or bin search?
+      \end{itemize}          
+  \end{itemize}  
+\end{frame}
+
